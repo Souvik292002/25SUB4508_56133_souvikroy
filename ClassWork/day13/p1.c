@@ -18,19 +18,19 @@ int main()
 
     int i;
 
-    printf("Original List:");
+    printf("Original List:\n");
     disp(cPlayers, 5);
     
-    printf("Character at cPlayers[0][3] = %c\n\n", cPlayers[0][3]);
+    //printf("Character at cPlayers[0][3] = %c\n\n", cPlayers[0][3]);
 
     
     sortAsc(cPlayers, 5);
-    printf("Ascending Order:");
+    printf("Ascending Order:\n");
     disp(cPlayers, 5);
 
     
     sortDesc(cPlayers, 5);
-    printf("Descending Order:");
+    printf("Descending Order:\n");
     disp(cPlayers, 5);
 
     return 0;
