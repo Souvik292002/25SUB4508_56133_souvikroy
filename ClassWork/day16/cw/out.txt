@@ -1,0 +1,5 @@
+
+Sum of Even=90250009500000
+Sum of Odd=90250000000000
+This is main thread
+This is main thread after join of thread
