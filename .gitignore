@@ -1,0 +1,8 @@
+.vscode/
+obj/
+bin/
+
+*.out
+*.bin
+*.exe
+
