@@ -1,0 +1,57 @@
+IPC - InterProcess communication
+1. pipes
+2. Named pipes
+3. Message Queues
+4. Shared Memory
+5. Semaphores
+
+
+1. msg Queues
+
+
+key function
+1. msgget
+2. msgsnd
+3. msgrcv
+4. msgctl
+
+
+2. Shared Memory
+
+key function
+1. shmget -> create -> key creating shared mem to be used for diff processes
+2. shmat -> attach -> mem to the process
+3. Operations -> reading/writing operation on that mem
+4. shmdt -> deattach -> mem for that process
+5. shmctl -> control on shared mem
+
+
+Semaphores
+
+struct sembuf{
+    unsigned short sem_num; // Semaphores index
+    short sem_op; // operation
+    short sem_flg; // flags
+}
+
+
+//initializing Semaphores
+
+union semun{
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+}
+
+union semun arg;
+arg.val = 1
+semctl(semid, 0, SETVAL, arg);
+
+semop(senid, struct sembuf *sops, size_t nsops);
+-1 wait/P operation 
++1 signal/V operation
+0  wait until zero
+
+
+
+

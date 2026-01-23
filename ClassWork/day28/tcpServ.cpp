@@ -15,7 +15,7 @@ int main()
 {
     int sd,csd, rVal=0;
 
-    socklen_t clientAddrLen=0;
+    int clientAddrLen=0;
 
     struct sockaddr_in serv_addr, client_addr;
 
@@ -46,40 +46,7 @@ int main()
     }
     cout<<"[server] bind to 127.0.0.1:4003 is done!"<<endl;
 
-    rVal = listen(sd, 5);
-
-    if(rVal < 0)
-    {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
-    cout<<"[server] listening to the clients"<<endl;
-
-    //csd is ment for client socket descp
-    
-    csd = accept(sd,(struct sockaddr *)&client_addr, &clientAddrLen);
-
-    if(csd < 0)
-    {
-        perror("accept");
-        exit(EXIT_FAILURE);
-    }
-
-    cout<<"[server] client got a connection"<<endl;
-
-    strcpy(msg,"\n===========================\n");
-    strcat(msg,"\n==========Welcome==========\n");
-    strcat(msg,"\n===========================\n");
-    
-    write(csd,msg, strlen(msg));
-    memset(msg, '\0', MAXBUFF);
-    read(csd,msg, MAXBUFF);
-    cout<<"\nMessage [client]: "<<msg<<endl;
-    close(csd);
-
-
-
-    //while(1);
+    while(1);
     close(sd);
 
     return 0;

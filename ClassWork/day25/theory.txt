@@ -1,0 +1,28 @@
+Components of the process
+
+1. Program Code - Set of instruction to be excuted
+2. Stack - function calls, local variables
+3. Heap - Dy. Memory
+4. Data Segment - Gobal/Static variables
+5. Registers - CPU state
+6. Process Control Block (PCB) - Kernel Structure tracking the process
+
+
+PCB contains  task_struct,
+
+1. PID
+2. Process State
+3. scheduling info
+4. Parent PID 
+5. File descriptors
+6. Memory Info 
+
+$ps -elf
+
+
+Creating a process and Manage
+
+system calls
+1. fork()
+2. exec()
+

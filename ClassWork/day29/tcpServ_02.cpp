@@ -56,27 +56,28 @@ int main()
     cout<<"[server] listening to the clients"<<endl;
 
     //csd is ment for client socket descp
-    
-    csd = accept(sd,(struct sockaddr *)&client_addr, &clientAddrLen);
-
-    if(csd < 0)
+    while(1)
     {
-        perror("accept");
-        exit(EXIT_FAILURE);
+        csd = accept(sd,(struct sockaddr *)&client_addr, &clientAddrLen);
+
+        if(csd < 0)
+        {
+            perror("accept");
+            exit(EXIT_FAILURE);
+        }
+        
+        cout<<"[server] client got a connection"<<endl;
+
+        strcpy(msg,"\n===========================\n");
+        strcat(msg,"\n==========Welcome==========\n");
+        strcat(msg,"\n===========================\n");
+        
+        write(csd,msg, strlen(msg));
+        memset(msg, '\0', MAXBUFF);
+        read(csd,msg, MAXBUFF);
+        cout<<"\nMessage [client]: "<<msg<<endl;
+        close(csd);
     }
-
-    cout<<"[server] client got a connection"<<endl;
-
-    strcpy(msg,"\n===========================\n");
-    strcat(msg,"\n==========Welcome==========\n");
-    strcat(msg,"\n===========================\n");
-    
-    write(csd,msg, strlen(msg));
-    memset(msg, '\0', MAXBUFF);
-    read(csd,msg, MAXBUFF);
-    cout<<"\nMessage [client]: "<<msg<<endl;
-    close(csd);
-
 
 
     //while(1);

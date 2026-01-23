@@ -1,47 +1,67 @@
 #include <iostream>
 #include <cstring>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <sys/types.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h> 
 #include <unistd.h>
-
-using namespace std;
+#include <string>
 
 #define PORT 4003
 #define MAXBUFF 1024
 
+using namespace std;
+
 int main()
 {
-    int sd;
-    struct sockaddr_in serv_addr;
-    char msg[MAXBUFF];
+    int sd, rVal=0;
 
-    sd = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in serv_addr;
+
+    char msg[MAXBUFF] = {'\0',};
+
+    sd = socket(AF_INET,SOCK_STREAM, 0);
+
+    if(sd == -1)
+    {
+        perror("socket");
+        exit(EXIT_FAILURE);
+    }
+    cout<<"[server] socket created with sd: "<<sd<<endl;
 
     memset(&serv_addr, 0, sizeof(serv_addr));
+
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(PORT);
-    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serv_addr.sin_port = htons(PORT); //server's port no
+    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); //server's ipaddr
 
-    connect(sd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
 
-    while (1) {
-        memset(msg, 0, MAXBUFF);
+    rVal = connect(sd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+    //rVal = bind(sd,(struct sockaddr *) &serv_addr,  sizeof(serv_addr));
 
-        cout << "client_s: ";
-        cin.getline(msg, MAXBUFF);
-
-        write(sd, msg, strlen(msg));
-
-        memset(msg, 0, MAXBUFF);
-        read(sd, msg, MAXBUFF);
-
-        cout << "client_r: " << msg << endl << endl;
-
-        if (strcmp(msg, "[server], bye") == 0)
-            break;
+    if(rVal < 0)
+    {
+        perror("connect");
+        exit(EXIT_FAILURE);
     }
+    cout<<"[client] connected to server with ipaddr: 127.0.0.1 port: 4003 is done!"<<endl;
 
+    memset(msg, '\0', MAXBUFF);
+    read(sd,msg, MAXBUFF);
+    cout<<"\n[client]:\n\n"<<msg<<endl;
+    
+    memset(msg, '\0', MAXBUFF);
+    cout<<"\nMessage: ";
+    cin.getline(msg, MAXBUFF);
+    //strcpy(msg,"Hi from the client\n");
+    write(sd,msg, strlen(msg));
+    cout<<"\nMessage sent to the server: "<<msg<<endl;
     close(sd);
+
     return 0;
+
 }
+
+
+
+

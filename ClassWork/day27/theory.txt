@@ -1,0 +1,28 @@
+Why signals are needed.
+
+1. Terminate proceesses (SIGTERM, SIGKILL) - 15, 9
+2. Handling Keyboard interupts (SIGINT) -> Ctrl+C -> 2
+3. Detect Carshes (SIGSEGV)
+4. Timers (SIGALRM)
+5. Child Process termination (SIGCHLD)
+
+
+
+kill -SIGSEGV <pid>
+
+
+struct sigaction
+{
+    void (*sa_handler)(int);
+    signal_t sa_mask;
+    int sa_flags'
+};
+
+
+sigaction -> gives a full control on the signals
+
+1. which signals to block during Handling
+2. whether system calls restart
+3. whether extra signal info is reqd.
+
+
