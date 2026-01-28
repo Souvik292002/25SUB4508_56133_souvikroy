@@ -2,19 +2,21 @@
 #include <thread>
 #include <netinet/in.h>
 #include <unistd.h>
+
 #include "../include/AccountManager.h"
 #include "../include/Logger.h"
 
 #define SERVER_PORT 8080
 
 /*
- TCP is chosen because:
- - Account verification is CRITICAL
- - Packet loss is unacceptable
- - Order and reliability are mandatory
+ TCP is used because banking operations are CRITICAL.
+ Reliability, ordering, and guaranteed delivery
+ outweigh the overhead.
 */
-AccountManager accountManager("data/accounts.txt");
-Logger logger("logs/server.log");
+
+// Paths are relative to project ROOT (not bin/)
+AccountManager accountManager("server/data/accounts.txt");
+Logger logger("server/logs/server.log");
 
 void handleClient(int clientSocket) {
     int accountNumber, pin;
